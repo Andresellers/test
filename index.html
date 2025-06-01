@@ -1,0 +1,1776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My First Website</title>
+  <link href="https://fonts.googleapis.com/css?family=Inter:400,600,700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', Arial, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      color: #222;
+    }
+    #top-bar {
+      background: #222;
+      color: #fff;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 0 0 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+    #menu-btn {
+      margin-left: 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      z-index: 1100;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: background 0.2s;
+      border-radius: 6px;
+    }
+    #menu-btn:hover {
+      background: rgba(255,255,255,0.08);
+    }
+    #menu-btn span {
+      display: block;
+      width: 28px;
+      height: 4px;
+      background: #fff;
+      margin: 4px 0;
+      border-radius: 2px;
+      transition: background 0.2s;
+    }
+    #datetime-box {
+      margin-right: 32px;
+      background: #333;
+      padding: 10px 22px;
+      border-radius: 10px;
+      min-width: 220px;
+      text-align: right;
+      font-size: 1em;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+    #side-menu {
+      position: fixed;
+      top: 56px;
+      left: -240px;
+      width: 220px;
+      height: 100%;
+      background: #23272f;
+      color: #fff;
+      padding-top: 24px;
+      box-shadow: 2px 0 12px rgba(0,0,0,0.10);
+      font-family: 'Inter', Arial, sans-serif;
+      z-index: 1050;
+      transition: left 0.3s;
+      border-top-right-radius: 16px;
+    }
+    #side-menu ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    #side-menu .menu-item {
+      padding: 14px 28px;
+      cursor: pointer;
+      font-size: 1.08em;
+      border-left: 4px solid transparent;
+      transition: background 0.18s, border-color 0.18s;
+      border-radius: 0 16px 16px 0;
+      margin-bottom: 2px;
+    }
+    #side-menu .menu-item:hover {
+      background: #2d323c;
+      border-left: 4px solid #1976d2;
+    }
+    #main-content {
+      margin-top: 56px;
+      margin-left: 0;
+      transition: margin-left 0.3s;
+      padding: 40px 24px 0 24px;
+      min-height: calc(100vh - 56px);
+      box-sizing: border-box;
+    }
+    .section-box {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      padding: 36px 32px 28px 32px;
+      margin-bottom: 36px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .section-title {
+      font-size: 2em;
+      font-weight: 700;
+      margin-bottom: 18px;
+      color: #1976d2;
+      letter-spacing: 0.5px;
+    }
+    .live-event-link {
+      font-size: 1.1em;
+      margin: 8px 0 0 0;
+      padding: 10px 0;
+      width: 100%;
+      background: #e3f0fc;
+      border-radius: 8px;
+      color: #1976d2;
+      cursor: pointer;
+      text-decoration: underline;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.18s, color 0.18s;
+      border: 1px solid #d0e3f7;
+    }
+    .live-event-link:hover {
+      background: #d0e3f7;
+      color: #125ea7;
+    }
+    .past-event-log {
+      width: 100%;
+      margin-bottom: 16px;
+      background: #f7f7fa;
+      border-radius: 8px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      padding: 16px 18px 10px 18px;
+      font-size: 1em;
+      color: #444;
+    }
+    .excel-upload-form input[type='file'] {
+      font-size: 1em;
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #c3cfe2;
+      background: #f5f7fa;
+      margin-bottom: 12px;
+    }
+    .excel-upload-form button {
+      padding: 10px 22px;
+      font-size: 1em;
+      background: #1976d2;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.18s;
+    }
+    .excel-upload-form button:hover {
+      background: #125ea7;
+    }
+    @media (max-width: 700px) {
+      .section-box {
+        padding: 18px 8px 14px 8px;
+      }
+      #main-content {
+        padding: 16px 2vw 0 2vw;
+      }
+      #datetime-box {
+        min-width: 120px;
+        padding: 8px 8px;
+        font-size: 0.95em;
+      }
+    }
+    .dashboard-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 36px;
+      justify-content: center;
+      align-items: flex-start;
+      margin-bottom: 36px;
+      max-width: 1300px;
+      margin-left: auto;
+      margin-right: auto;
+      box-sizing: border-box;
+    }
+    .dashboard-col {
+      flex: 1 1 340px;
+      min-width: 320px;
+      max-width: 420px;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+    }
+    .dashboard-section-box {
+      max-width: 420px;
+      min-width: 0;
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      box-sizing: border-box;
+    }
+    .section-box {
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      padding: 36px 32px 28px 32px;
+      margin-bottom: 36px;
+      background: #fff;
+      flex: 1 1 auto;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+    }
+    .admin-events-columns {
+      display: flex;
+      gap: 40px;
+      justify-content: center;
+      align-items: stretch;
+      margin-bottom: 36px;
+      width: 100%;
+      min-height: 400px;
+      max-width: 100vw;
+      overflow-x: auto;
+      box-sizing: border-box;
+    }
+    .admin-events-col {
+      flex: 1 1 0;
+      min-width: 260px;
+      max-width: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+      box-sizing: border-box;
+    }
+    .admin-event-tiles {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      justify-content: flex-start;
+      align-items: flex-start;
+      min-height: 320px;
+      box-sizing: border-box;
+    }
+    .past-event-link {
+      font-size: 1.08em;
+      color: #888;
+      background: #f7f7fa;
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      border: 1px solid #e0e0e0;
+      transition: background 0.16s, color 0.16s;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+    }
+    .past-event-link:hover {
+      background: #e3f0fc;
+      color: #1976d2;
+    }
+    @media (max-width: 1200px) {
+      .admin-events-columns {
+        flex-direction: column;
+        gap: 18px;
+        min-height: unset;
+        max-width: 100vw;
+        overflow-x: auto;
+      }
+      .admin-events-col {
+        max-width: 100%;
+        min-width: 0;
+      }
+      .admin-section-box {
+        width: 99vw;
+        max-width: 100vw;
+        padding: 18px 2vw 14px 2vw;
+        overflow-x: auto;
+      }
+      .dashboard-row {
+        flex-direction: column;
+        gap: 18px;
+      }
+      .dashboard-col {
+        max-width: 100%;
+      }
+    }
+    .event-edit-form input, .event-edit-form textarea {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #c3cfe2;
+      font-size: 1em;
+      background: #f5f7fa;
+    }
+    .event-edit-form label {
+      font-weight: 600;
+      margin-top: 8px;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .event-edit-form button {
+      padding: 10px 22px;
+      font-size: 1em;
+      background: #1976d2;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.18s;
+      margin-top: 8px;
+    }
+    .event-edit-form button:hover {
+      background: #125ea7;
+    }
+    .event-map-img {
+      width: 100%;
+      max-width: 350px;
+      border-radius: 10px;
+      margin: 12px 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      object-fit: contain;
+      background: #f5f5f5;
+      min-height: 120px;
+    }
+    .admin-badge {
+      display: inline-block;
+      background: #1976d2;
+      color: #fff;
+      font-size: 0.95em;
+      font-weight: 600;
+      border-radius: 6px;
+      padding: 2px 10px;
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+    .readonly-badge {
+      display: inline-block;
+      background: #888;
+      color: #fff;
+      font-size: 0.95em;
+      font-weight: 600;
+      border-radius: 6px;
+      padding: 2px 10px;
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+    .admin-events-col-title {
+      font-size: 1.2em;
+      font-weight: 700;
+      color: #fff;
+      background: #1976d2;
+      border-radius: 10px;
+      padding: 10px 0;
+      width: 100%;
+      text-align: center;
+      margin-bottom: 18px;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 8px rgba(25,118,210,0.10);
+    }
+    .admin-event-tile {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+      padding: 16px 14px 12px 14px;
+      width: 180px;
+      min-width: 140px;
+      max-width: 200px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: box-shadow 0.18s, transform 0.18s;
+      cursor: pointer;
+      border: 1px solid #e0e0e0;
+    }
+    .admin-event-tile:hover {
+      box-shadow: 0 6px 24px rgba(25,118,210,0.13);
+      transform: translateY(-2px) scale(1.03);
+      border-color: #1976d2;
+    }
+    .admin-event-tile-img {
+      width: 100%;
+      max-width: 120px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 8px;
+      background: #f5f5f5;
+      margin-bottom: 10px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+    .admin-event-tile-title {
+      font-size: 1.08em;
+      font-weight: 600;
+      color: #1976d2;
+      margin-bottom: 4px;
+      text-align: center;
+      line-height: 1.2;
+    }
+    .admin-event-tile-time {
+      font-size: 0.97em;
+      color: #444;
+      margin-bottom: 2px;
+      text-align: center;
+    }
+    @media (max-width: 900px) {
+      .admin-event-tiles {
+        gap: 10px;
+      }
+      .admin-event-tile {
+        width: 44vw;
+        min-width: 120px;
+        max-width: 98vw;
+      }
+    }
+    .add-event-btn {
+      display: inline-block;
+      background: #1976d2;
+      color: #fff;
+      font-size: 1em;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 24px;
+      margin-bottom: 24px;
+      cursor: pointer;
+      transition: background 0.18s;
+      box-shadow: 0 2px 8px rgba(25,118,210,0.10);
+    }
+    .add-event-btn:hover {
+      background: #125ea7;
+    }
+    /* Dashboard layout: keep centered and max-width */
+    .dashboard-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 32px;
+      justify-content: center;
+      align-items: flex-start;
+      margin-bottom: 36px;
+      max-width: 1300px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .dashboard-col {
+      flex: 1 1 320px;
+      min-width: 320px;
+      max-width: 420px;
+      display: flex;
+      flex-direction: column;
+    }
+    .dashboard-section-box {
+      max-width: 420px;
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    /* Admin page full-width overrides */
+    .admin-section-box {
+      width: 96vw;
+      max-width: 100vw;
+      margin-left: auto;
+      margin-right: auto;
+      overflow-x: auto;
+      box-sizing: border-box;
+    }
+    .admin-events-columns {
+      display: flex;
+      gap: 40px;
+      justify-content: center;
+      align-items: stretch;
+      margin-bottom: 36px;
+      width: 100%;
+      min-height: 400px;
+      max-width: 100vw;
+      overflow-x: auto;
+      box-sizing: border-box;
+    }
+    .admin-events-col {
+      flex: 1 1 0;
+      min-width: 260px;
+      max-width: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+      box-sizing: border-box;
+    }
+    .admin-event-tiles {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      justify-content: flex-start;
+      align-items: flex-start;
+      min-height: 320px;
+      box-sizing: border-box;
+    }
+    @media (max-width: 1200px) {
+      .admin-events-columns {
+        flex-direction: column;
+        gap: 18px;
+        min-height: unset;
+        max-width: 100vw;
+        overflow-x: auto;
+      }
+      .admin-events-col {
+        max-width: 100%;
+        min-width: 0;
+      }
+      .admin-section-box {
+        width: 99vw;
+        max-width: 100vw;
+        padding: 18px 2vw 14px 2vw;
+        overflow-x: auto;
+      }
+      .dashboard-row {
+        flex-direction: column;
+        gap: 18px;
+      }
+      .dashboard-col {
+        max-width: 100%;
+      }
+    }
+    .dispatch-section {
+      max-width: 1100px;
+      margin: 0 auto 36px auto;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      padding: 36px 32px 28px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .dispatch-event-select {
+      margin-bottom: 18px;
+      font-size: 1.1em;
+      font-weight: 600;
+    }
+    .dispatch-resources {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    .dispatch-resource-box {
+      background: #e3f0fc;
+      border-radius: 10px;
+      padding: 18px 20px;
+      min-width: 180px;
+      box-shadow: 0 2px 8px rgba(25,118,210,0.07);
+      margin-bottom: 8px;
+      flex: 1 1 180px;
+    }
+    .dispatch-calls {
+      background: #f5f5f5;
+      border-radius: 10px;
+      padding: 18px 20px;
+      min-height: 120px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .dispatch-call-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid #e0e0e0;
+      font-size: 1.05em;
+    }
+    .dispatch-call-row:last-child {
+      border-bottom: none;
+    }
+    .dispatch-btn {
+      background: #1976d2;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 7px 16px;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      margin-left: 8px;
+      transition: background 0.18s;
+    }
+    .dispatch-btn:hover {
+      background: #125ea7;
+    }
+    .dispatch-main-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1.3fr 1.2fr;
+      gap: 32px;
+      width: 100%;
+      margin-top: 18px;
+      align-items: flex-start;
+    }
+    .dispatch-board-title {
+      font-size: 1.15em;
+      font-weight: 700;
+      color: #1976d2;
+      margin-bottom: 10px;
+      letter-spacing: 0.5px;
+    }
+    .dispatch-resources-table {
+      background: #f7fafd;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(25,118,210,0.07);
+      padding: 12px 8px;
+      min-width: 180px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .resource-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #e3f0fc;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 1em;
+      gap: 8px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      border: 1px solid #d0e3f7;
+    }
+    .resource-status-Available { color: #219653; font-weight: 600; }
+    .resource-status-EnRoute { color: #f2994a; font-weight: 600; }
+    .resource-status-OnScene { color: #1976d2; font-weight: 600; }
+    .resource-status-Busy { color: #d32f2f; font-weight: 600; }
+    .resource-status-Clear { color: #888; font-weight: 600; }
+    .resource-action {
+      border-radius: 6px;
+      border: 1px solid #c3cfe2;
+      padding: 4px 8px;
+      font-size: 0.98em;
+      background: #fff;
+      margin-left: 6px;
+    }
+    .dispatch-calls-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .call-card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      padding: 12px 14px 10px 14px;
+      font-size: 1em;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      border-left: 4px solid #1976d2;
+    }
+    .call-card .dispatch-btn {
+      margin-top: 6px;
+      width: fit-content;
+    }
+    .dispatch-map-board {
+      background: #f7fafd;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(25,118,210,0.07);
+      padding: 12px 8px;
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    .dispatch-map-img {
+      width: 100%;
+      max-width: 350px;
+      border-radius: 10px;
+      margin: 8px 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      object-fit: contain;
+      background: #f5f5f5;
+      min-height: 120px;
+    }
+    @media (max-width: 1100px) {
+      .dispatch-main-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+      .dispatch-map-board {
+        max-width: 100vw;
+      }
+    }
+    .dispatch-event-tiles {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin-bottom: 36px;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+    .dispatch-event-tile {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+      padding: 16px 14px 12px 14px;
+      width: 180px;
+      min-width: 140px;
+      max-width: 200px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: box-shadow 0.18s, transform 0.18s;
+      cursor: pointer;
+      border: 1px solid #e0e0e0;
+    }
+    .dispatch-event-tile:hover {
+      box-shadow: 0 6px 24px rgba(25,118,210,0.13);
+      transform: translateY(-2px) scale(1.03);
+      border-color: #1976d2;
+    }
+    .dispatch-event-tile-img {
+      width: 100%;
+      max-width: 120px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 8px;
+      background: #f5f5f5;
+      margin-bottom: 10px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+    .dispatch-event-tile-title {
+      font-size: 1.08em;
+      font-weight: 600;
+      color: #1976d2;
+      margin-bottom: 4px;
+      text-align: center;
+      line-height: 1.2;
+    }
+    .dispatch-event-tile-time {
+      font-size: 0.97em;
+      color: #444;
+      margin-bottom: 2px;
+      text-align: center;
+    }
+    .dispatch-past-section-title {
+      font-size: 1.15em;
+      font-weight: 700;
+      color: #888;
+      margin-bottom: 10px;
+      letter-spacing: 0.5px;
+    }
+    .export-btn {
+      background: #1976d2;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 7px 16px;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 18px;
+      transition: background 0.18s;
+    }
+    .export-btn:hover {
+      background: #125ea7;
+    }
+    .offline-indicator {
+      background: #d32f2f;
+      color: #fff;
+      padding: 6px 18px;
+      border-radius: 0 0 10px 10px;
+      position: fixed;
+      top: 56px;
+      right: 24px;
+      z-index: 2000;
+      font-weight: 600;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      display: none;
+    }
+    .offline-indicator.online {
+      background: #219653;
+      color: #fff;
+      display: block;
+    }
+    .offline-indicator.offline {
+      background: #d32f2f;
+      color: #fff;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div id="top-bar" style="width:100%;background:#222;color:#fff;padding:0 0 0 0;text-align:center;font-family:sans-serif;font-size:1.1em;position:fixed;top:0;left:0;z-index:1000;height:50px;display:flex;align-items:center;justify-content:space-between;">
+    <button id="menu-btn" style="margin-left:16px;background:none;border:none;cursor:pointer;padding:8px;z-index:1100;">
+      <span style="display:block;width:28px;height:4px;background:#fff;margin:5px 0;border-radius:2px;"></span>
+      <span style="display:block;width:28px;height:4px;background:#fff;margin:5px 0;border-radius:2px;"></span>
+      <span style="display:block;width:28px;height:4px;background:#fff;margin:5px 0;border-radius:2px;"></span>
+    </button>
+    <div style="flex:1;text-align:center;font-size:1.3em;font-weight:bold;letter-spacing:1px;">Medical Events Control System</div>
+    <div id="datetime-box" style="margin-right:24px;background:#444;padding:8px 18px;border-radius:8px;min-width:220px;text-align:right;font-size:1em;">
+      <span id="datetime">Loading date and time...</span>
+    </div>
+  </div>
+  <div id="side-menu" style="position:fixed;top:50px;left:-240px;width:220px;height:100%;background:#333;color:#fff;padding-top:20px;box-shadow:2px 0 8px rgba(0,0,0,0.1);font-family:sans-serif;z-index:1050;transition:left 0.3s;">
+    <ul id="menu-list" style="list-style:none;padding:0;margin:0;">
+      <li class="menu-item" data-page="dashboard" style="padding:12px 24px;cursor:pointer;">Dashboard</li>
+      <li class="menu-item" data-page="dispatch" style="padding:12px 24px;cursor:pointer;">Dispatch</li>
+      <li class="menu-item" data-page="live-events" style="padding:12px 24px;cursor:pointer;">Live Events</li>
+      <li class="menu-item" data-page="personnel" style="padding:12px 24px;cursor:pointer;">Personnel</li>
+      <li class="menu-item" data-page="equipment" style="padding:12px 24px;cursor:pointer;">Equipment</li>
+      <li class="menu-item" data-page="reports" style="padding:12px 24px;cursor:pointer;">Reports</li>
+      <li class="menu-item" data-page="schedules" style="padding:12px 24px;cursor:pointer;">Schedules</li>
+      <li class="menu-item" data-page="messages" style="padding:12px 24px;cursor:pointer;">Messages</li>
+      <li class="menu-item" data-page="admin" style="padding:12px 24px;cursor:pointer;">Admin</li>
+      <li class="menu-item" data-page="logout" style="padding:12px 24px;cursor:pointer;">Logout</li>
+    </ul>
+  </div>
+  <div id="main-content" style="margin-top:56px;margin-left:0;transition:margin-left 0.3s;padding:40px 24px 0 24px;min-height:calc(100vh - 56px);box-sizing:border-box;">
+    <!-- Dashboard content will be injected here -->
+  </div>
+  <div id="offline-indicator" class="offline-indicator">Offline: Changes will sync when back online.</div>
+  <script>
+    function updateDateTime() {
+      const now = new Date();
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const dateTimeString = now.toLocaleString(undefined, {
+        year: 'numeric', month: 'long', day: 'numeric',
+        hour: '2-digit', minute: '2-digit', second: '2-digit',
+        hour12: false,
+        timeZoneName: 'short'
+      });
+      document.getElementById('datetime').textContent = `${dateTimeString} (${tz})`;
+    }
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
+
+    // Hamburger menu logic
+    const menuBtn = document.getElementById('menu-btn');
+    const sideMenu = document.getElementById('side-menu');
+    const mainContent = document.getElementById('main-content');
+    let menuOpen = false;
+    menuBtn.onclick = function(e) {
+      e.stopPropagation();
+      menuOpen = !menuOpen;
+      if (menuOpen) {
+        sideMenu.style.left = '0';
+        mainContent.style.marginLeft = '220px';
+      } else {
+        sideMenu.style.left = '-240px';
+        mainContent.style.marginLeft = '0';
+      }
+    };
+    document.addEventListener('click', function(e) {
+      if (menuOpen && !sideMenu.contains(e.target) && e.target !== menuBtn && !menuBtn.contains(e.target)) {
+        sideMenu.style.left = '-240px';
+        mainContent.style.marginLeft = '0';
+        menuOpen = false;
+      }
+    });
+
+    // Simulate user role: 'admin' or 'responder'
+    let currentUser = { name: 'Alex', role: 'admin' }; // Change to 'responder' to test reduced view
+
+    // Store event map images in-memory (simulate DB)
+    let eventMapImages = {};
+
+    // Helper: Render map (image if uploaded, else fallback)
+    function renderEventMap(eventId, fallbackMapBox) {
+      if (eventMapImages[eventId]) {
+        return `<img src="${eventMapImages[eventId]}" class="event-map-img" alt="Event Map">`;
+      } else {
+        return fallbackMapBox;
+      }
+    }
+
+    // Example live events data with IIMARCH info and times
+    const liveEventsData = [
+      {
+        id: 'event1',
+        name: 'Marathon Medical Standby',
+        start: new Date(Date.now() - 2 * 60 * 60 * 1000), // started 2h ago
+        end: new Date(Date.now() + 2 * 60 * 60 * 1000),   // ends in 2h
+        iimarch: {
+          incident: 'Marathon Medical Standby',
+          information: 'Large city marathon with 10,000+ participants.',
+          intention: 'Provide medical cover for the duration of the event.',
+          method: 'Deploy 5 first aid posts, 2 ambulances, 20 medics.',
+          administration: 'Event runs 7am-3pm, main base at City Park.',
+          risk: 'Heat exhaustion, dehydration, minor injuries.',
+          communications: 'Radio channel 3, event control: 555-1234.',
+          humanitarian: 'Support for runners and spectators.'
+        }
+      },
+      {
+        id: 'event2',
+        name: 'Concert First Aid',
+        start: new Date(Date.now() - 5 * 60 * 60 * 1000), // started 5h ago
+        end: new Date(Date.now() - 1 * 60 * 60 * 1000),   // ended 1h ago
+        iimarch: {
+          incident: 'Concert First Aid',
+          information: 'Outdoor concert, 5,000 attendees expected.',
+          intention: 'Ensure rapid response to medical incidents.',
+          method: '2 first aid tents, 1 ambulance, 8 medics.',
+          administration: 'Gates open 5pm, event ends 11pm.',
+          risk: 'Crowd surges, intoxication, minor injuries.',
+          communications: 'Radio channel 2, event control: 555-5678.',
+          humanitarian: 'Assistance for vulnerable attendees.'
+        }
+      },
+      {
+        id: 'event3',
+        name: 'Sports Event Response',
+        start: new Date(Date.now() + 1 * 60 * 60 * 1000), // starts in 1h
+        end: new Date(Date.now() + 4 * 60 * 60 * 1000),   // ends in 4h
+        iimarch: {
+          incident: 'Sports Event Response',
+          information: 'Regional football finals, 2,000 spectators.',
+          intention: 'Medical standby for players and crowd.',
+          method: '1 first aid post, 1 ambulance, 6 medics.',
+          administration: 'Kickoff 2pm, finish 5pm.',
+          risk: 'Sports injuries, crowd trouble.',
+          communications: 'Radio channel 1, event control: 555-9012.',
+          humanitarian: 'Support for families and children.'
+        }
+      },
+      {
+        id: 'event4',
+        name: 'Community Health Fair',
+        start: new Date(Date.now() - 8 * 60 * 60 * 1000), // started 8h ago
+        end: new Date(Date.now() - 3 * 60 * 60 * 1000),   // ended 3h ago
+        iimarch: {
+          incident: 'Community Health Fair',
+          information: 'Health awareness event, 1,000+ visitors.',
+          intention: 'Provide first aid and health advice.',
+          method: 'Health booths, 2 medics, 1 ambulance.',
+          administration: '9am-4pm, Community Center.',
+          risk: 'Minor injuries, medical advice needs.',
+          communications: 'Radio channel 4, event control: 555-3456.',
+          humanitarian: 'Health support for all attendees.'
+        }
+      },
+      {
+        id: 'event5',
+        name: 'Corporate Wellness Day',
+        start: new Date(Date.now() + 3 * 60 * 60 * 1000), // starts in 3h
+        end: new Date(Date.now() + 6 * 60 * 60 * 1000),   // ends in 6h
+        iimarch: {
+          incident: 'Corporate Wellness Day',
+          information: 'On-site wellness event for 500 staff.',
+          intention: 'Medical standby and health checks.',
+          method: '1 medic, 1 first aid kit.',
+          administration: '10am-3pm, HQ building.',
+          risk: 'Minor injuries, health checks.',
+          communications: 'Radio channel 5, event control: 555-7890.',
+          humanitarian: 'Support for staff wellbeing.'
+        }
+      }
+    ];
+
+    // Helper: Map iframe HTML
+    function mapBox(lat = 51.505, lon = -0.09, zoom = 13, height = 250) {
+      return `<div style='margin:18px 0;'><iframe width='100%' height='${height}' frameborder='0' style='border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.07);' src='https://www.openstreetmap.org/export/embed.html?bbox=${lon-0.02}%2C${lat-0.02}%2C${lon+0.02}%2C${lat+0.02}&amp;layer=mapnik&amp;marker=${lat}%2C${lon}'></iframe></div>`;
+    }
+
+    // Helper: Format date/time
+    function formatDateTime(dt) {
+      return dt.toLocaleString(undefined, { hour: '2-digit', minute: '2-digit', day: 'numeric', month: 'short', year: 'numeric' });
+    }
+
+    // Page navigation logic
+    const pages = {
+      dashboard: function() {
+        const now = new Date();
+        const liveEvents = liveEventsData.filter(ev => ev.end > now);
+        const pastEvents = liveEventsData.filter(ev => ev.end <= now);
+        return `
+          <div class='dashboard-row'>
+            <div class='dashboard-col'>
+              <div class='section-box dashboard-section-box' style='text-align:center;'>
+                <div style='font-size:2em;font-weight:bold;margin-bottom:8px;'>Welcome ${currentUser.name}</div>
+                <div class='section-title'>Current Live Events</div>
+                <div style='font-size:3em;font-weight:bold;color:#1976d2;margin-bottom:18px;'>${liveEvents.length}</div>
+                <div style='display:flex;flex-direction:column;align-items:center;'>
+                  ${liveEvents.map(ev => `<div class='live-event-link' data-event-id='${ev.id}'><span>${ev.name}</span><span style='font-size:0.95em;color:#444;margin-left:12px;'>${formatDateTime(ev.start)} - ${formatDateTime(ev.end)}</span></div>`).join('')}
+                </div>
+                ${mapBox()}
+              </div>
+            </div>
+            <div class='dashboard-col'>
+              <div class='section-box dashboard-section-box'>
+                <div class='section-title'>Past Events</div>
+                <div style='display:flex;flex-direction:column;align-items:center;'>
+                  ${pastEvents.length === 0 ? '<div style="color:#888;">No past events yet.</div>' : pastEvents.map(ev => `<div class='past-event-link' data-past-event-id='${ev.id}'>
+                    <span style='font-weight:600;'>${ev.name}</span>
+                    <span style='font-size:0.95em;color:#444;'>${formatDateTime(ev.start)} - ${formatDateTime(ev.end)}</span>
+                  </div>`).join('')}
+                </div>
+              </div>
+            </div>
+            <div class='dashboard-col'>
+              <div class='section-box dashboard-section-box'>
+                <div class='section-title'>Import Past Patients & Logs</div>
+                <form id='excel-upload-form' class='excel-upload-form'>
+                  <input type='file' id='excel-file' accept='.xlsx,.xls' style='margin-bottom:12px;'>
+                  <button type='submit'>Upload & Convert</button>
+                </form>
+                <div id='excel-output' style='margin-top:18px;font-size:0.98em;'></div>
+              </div>
+            </div>
+          </div>
+        `;
+      },
+      dispatch: function(arg) {
+        // Only show events with dispatchEnabled
+        const now = new Date();
+        const enabledEvents = liveEventsData.filter(ev => ev.dispatchEnabled && ev.end > now);
+        const pastEvents = liveEventsData.filter(ev => ev.dispatchEnabled && ev.end <= now);
+        if (arg && typeof arg === 'string') {
+          // Show dispatch system for a specific event
+          return renderDispatchUI(arg);
+        }
+        return `
+          <div class='dispatch-section'>
+            <div class='section-title'>Dispatch - Select Event</div>
+            <div class='dispatch-event-tiles'>
+              ${enabledEvents.length === 0 ? '<div style="color:#888;">No current dispatch-enabled events.</div>' : enabledEvents.map(ev => `
+                <a class='dispatch-event-tile' href='/dispatch/${ev.id}' data-dispatch-event-id='${ev.id}'>
+                  <img class='dispatch-event-tile-img' src='${eventMapImages[ev.id] || "https://placehold.co/120x70?text=Map"}' alt='Event Map'>
+                  <div class='dispatch-event-tile-title'>${ev.name}</div>
+                  <div class='dispatch-event-tile-time'>${formatDateTime(ev.start)}<br>to<br>${formatDateTime(ev.end)}</div>
+                </a>
+              `).join('')}
+            </div>
+            <div class='dispatch-past-section-title'>Past Dispatch Events</div>
+            <div class='dispatch-event-tiles'>
+              ${pastEvents.length === 0 ? '<div style="color:#888;">No past dispatch events.</div>' : pastEvents.map(ev => `
+                <a class='dispatch-event-tile' href='/dispatch/${ev.id}/past' data-dispatch-past-event-id='${ev.id}'>
+                  <img class='dispatch-event-tile-img' src='${eventMapImages[ev.id] || "https://placehold.co/120x70?text=Map"}' alt='Event Map'>
+                  <div class='dispatch-event-tile-title'>${ev.name}</div>
+                  <div class='dispatch-event-tile-time'>${formatDateTime(ev.start)}<br>to<br>${formatDateTime(ev.end)}</div>
+                </a>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      },
+      'live-events': function(eventId) {
+        if (eventId) {
+          // Show specific event page
+          const ev = liveEventsData.find(e => e.id === eventId);
+          if (!ev) return `<div>Event not found.</div>`;
+          const iimarch = ev.iimarch;
+          return `
+            <div style='max-width:700px;margin:auto;'>
+              <div style='background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.07);padding:32px 24px 24px 24px;margin-bottom:32px;'>
+                <div style='font-size:2em;font-weight:bold;margin-bottom:10px;'>${ev.name}</div>
+                <div style='background:#f5f5f5;padding:18px 24px;border-radius:10px;margin-bottom:18px;'>
+                  <div style='margin-bottom:8px;'><b>I</b>ncident: ${iimarch.incident}</div>
+                  <div style='margin-bottom:8px;'><b>I</b>nformation: ${iimarch.information}</div>
+                  <div style='margin-bottom:8px;'><b>M</b>ethod: ${iimarch.method}</div>
+                  <div style='margin-bottom:8px;'><b>A</b>dministration: ${iimarch.administration}</div>
+                  <div style='margin-bottom:8px;'><b>R</b>isk: ${iimarch.risk}</div>
+                  <div style='margin-bottom:8px;'><b>C</b>ommunications: ${iimarch.communications}</div>
+                  <div style='margin-bottom:8px;'><b>H</b>umanitarian: ${iimarch.humanitarian}</div>
+                  <div style='margin-bottom:8px;'><b>I</b>ntention: ${iimarch.intention}</div>
+                </div>
+                ${renderEventMap(ev.id, mapBox(51.5 + Math.random()*0.1, -0.1 + Math.random()*0.1, 13))}
+                <button id='back-to-dashboard' style='margin-top:24px;padding:10px 24px;font-size:1em;background:#1976d2;color:#fff;border:none;border-radius:6px;cursor:pointer;'>Back to Dashboard</button>
+              </div>
+            </div>
+          `;
+        } else {
+          // List all live events
+          return `
+            <div style='max-width:700px;margin:auto;'>
+              <div style='background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.07);padding:32px 24px 24px 24px;margin-bottom:32px;'>
+                <div style='font-size:2em;font-weight:bold;'>Live Events</div>
+                <p>List and manage all live events here.</p>
+                ${mapBox(51.52, -0.12, 13)}
+              </div>
+            </div>
+          `;
+        }
+      },
+      personnel: function() {
+        return `
+          <div style='max-width:700px;margin:auto;'>
+            <div style='background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.07);padding:32px 24px 24px 24px;margin-bottom:32px;'>
+              <div style='font-size:2em;font-weight:bold;'>Personnel</div>
+              <p>Manage personnel here.</p>
+              ${mapBox(51.53, -0.13, 13)}
+            </div>
+          </div>
+        `;
+      },
+      equipment: function() {
+        return `
+          <div style='max-width:700px;margin:auto;'>
+            <div style='background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.07);padding:32px 24px 24px 24px;margin-bottom:32px;'>
+              <div style='font-size:2em;font-weight:bold;'>Equipment</div>
+              <p>Manage equipment here.</p>
+              ${mapBox(51.54, -0.14, 13)}
+            </div>
+          </div>
+        `;
+      },
+      reports: function() {
+        return `
+          <div style='max-width:700px;margin:auto;'>
+            <div style='background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.07);padding:32px 24px 24px 24px;margin-bottom:32px;'>
+              <div style='font-size:2em;font-weight:bold;'>Reports</div>
+              <p>View and generate reports here.</p>
+              ${mapBox(51.55, -0.15, 13)}
+            </div>
+          </div>
+        `;
+      },
+      schedules: function() {
+        return `
+          <div style='max-width:700px;margin:auto;'>
+            <div style='background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.07);padding:32px 24px 24px 24px;margin-bottom:32px;'>
+              <div style='font-size:2em;font-weight:bold;'>Schedules</div>
+              <p>View and manage schedules here.</p>
+              ${mapBox(51.56, -0.16, 13)}
+            </div>
+          </div>
+        `;
+      },
+      messages: function() {
+        return `
+          <div style='max-width:700px;margin:auto;'>
+            <div style='background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.07);padding:32px 24px 24px 24px;margin-bottom:32px;'>
+              <div style='font-size:2em;font-weight:bold;'>Messages</div>
+              <p>View and send messages here.</p>
+              ${mapBox(51.57, -0.17, 13)}
+            </div>
+          </div>
+        `;
+      },
+      admin: function() {
+        if (currentUser.role !== 'admin') {
+          return `<div class='section-box'><div class='readonly-badge'>Responder View</div><div style='margin-top:10px;'>You do not have access to admin features.</div></div>`;
+        }
+        const now = new Date();
+        const currentEvents = liveEventsData.filter(ev => ev.end > now);
+        const pastEvents = liveEventsData.filter(ev => ev.end <= now);
+        return `
+          <div class='section-box admin-section-box'>
+            <div class='section-title'>Admin Panel <span class='admin-badge'>Admin</span></div>
+            <button class='add-event-btn' id='add-event-btn'>+ Add Event</button>
+            <div style='font-size:1.1em;margin-bottom:18px;'>Click an event tile to edit its details and map image.</div>
+            <div class='admin-events-columns'>
+              <div class='admin-events-col'>
+                <div class='admin-events-col-title' style='background:#1976d2;'>Current Events</div>
+                <div class='admin-event-tiles'>
+                  ${currentEvents.length === 0 ? '<div style="color:#888;">No current events.</div>' : currentEvents.map(ev => `
+                    <div class='admin-event-tile' data-admin-event-id='${ev.id}'>
+                      <img class='admin-event-tile-img' src='${eventMapImages[ev.id] || "https://placehold.co/120x70?text=Map"}' alt='Event Map'>
+                      <div class='admin-event-tile-title'>${ev.name}</div>
+                      <div class='admin-event-tile-time'>${formatDateTime(ev.start)}<br>to<br>${formatDateTime(ev.end)}</div>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+              <div class='admin-events-col'>
+                <div class='admin-events-col-title' style='background:#888;'>Past Events</div>
+                <div class='admin-event-tiles'>
+                  ${pastEvents.length === 0 ? '<div style="color:#888;">No past events.</div>' : pastEvents.map(ev => `
+                    <div class='admin-event-tile' data-admin-event-id='${ev.id}'>
+                      <img class='admin-event-tile-img' src='${eventMapImages[ev.id] || "https://placehold.co/120x70?text=Map"}' alt='Event Map'>
+                      <div class='admin-event-tile-title'>${ev.name}</div>
+                      <div class='admin-event-tile-time'>${formatDateTime(ev.start)}<br>to<br>${formatDateTime(ev.end)}</div>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      },
+      logout: function() {
+        return `
+          <div style='max-width:700px;margin:auto;'>
+            <div style='background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.07);padding:32px 24px 24px 24px;margin-bottom:32px;'>
+              <div style='font-size:2em;font-weight:bold;'>Logout</div>
+              <p>You have been logged out.</p>
+              ${mapBox(51.59, -0.19, 13)}
+            </div>
+          </div>
+        `;
+      },
+      'past-event': function(eventId) {
+        const ev = liveEventsData.find(e => e.id === eventId);
+        if (!ev) return `<div class='section-box'><div>Event not found.</div></div>`;
+        const iimarch = ev.iimarch;
+        return `
+          <div class='section-box'>
+            <div class='section-title'>${ev.name} (Past Event)</div>
+            <div style='font-size:1.1em;color:#444;margin-bottom:10px;'>${formatDateTime(ev.start)} - ${formatDateTime(ev.end)}</div>
+            <div style='background:#f5f5f5;padding:18px 24px;border-radius:10px;margin-bottom:18px;'>
+              <div style='margin-bottom:8px;'><b>I</b>ncident: ${iimarch.incident}</div>
+              <div style='margin-bottom:8px;'><b>I</b>nformation: ${iimarch.information}</div>
+              <div style='margin-bottom:8px;'><b>M</b>ethod: ${iimarch.method}</div>
+              <div style='margin-bottom:8px;'><b>A</b>dministration: ${iimarch.administration}</div>
+              <div style='margin-bottom:8px;'><b>R</b>isk: ${iimarch.risk}</div>
+              <div style='margin-bottom:8px;'><b>C</b>ommunications: ${iimarch.communications}</div>
+              <div style='margin-bottom:8px;'><b>H</b>umanitarian: ${iimarch.humanitarian}</div>
+              <div style='margin-bottom:8px;'><b>I</b>ntention: ${iimarch.intention}</div>
+            </div>
+            ${renderEventMap(ev.id, mapBox(51.5 + Math.random()*0.1, -0.1 + Math.random()*0.1, 13))}
+            <button id='back-to-dashboard' style='margin-top:24px;padding:10px 24px;font-size:1em;background:#1976d2;color:#fff;border:none;border-radius:6px;cursor:pointer;'>Back to Dashboard</button>
+          </div>
+        `;
+      },
+      'admin-event': function(eventId) {
+        if (currentUser.role !== 'admin') {
+          return `<div class='section-box'><div class='readonly-badge'>Responder View</div><div style='margin-top:10px;'>You do not have access to admin features.</div></div>`;
+        }
+        const ev = liveEventsData.find(ev => ev.id === eventId);
+        if (!ev) return `<div class='section-box'><div>Event not found.</div></div>`;
+        return `
+          <div class='section-box'>
+            <div class='section-title'>Edit Event: ${ev.name}</div>
+            <form class='event-edit-form' data-event-id='${ev.id}' autocomplete='off' enctype='multipart/form-data'>
+              <label>Event Name</label>
+              <input type='text' name='name' value="${ev.name}">
+              <label>Start Time</label>
+              <input type='datetime-local' name='start' value="${ev.start.toISOString().slice(0,16)}">
+              <label>End Time</label>
+              <input type='datetime-local' name='end' value="${ev.end.toISOString().slice(0,16)}">
+              <label>Enable Dispatch for this Event</label>
+              <input type='checkbox' name='dispatchEnabled' ${ev.dispatchEnabled ? 'checked' : ''} style='margin-bottom:12px;'>
+              <label>Map Image (JPG/PNG, optional)</label>
+              <input type='file' name='mapimg' accept='image/*'>
+              ${renderEventMap(ev.id, mapBox())}
+              <label>IIMARCH Data</label>
+              <textarea name='iimarch' rows='7'>${Object.entries(ev.iimarch).map(([k,v])=>k.charAt(0).toUpperCase()+k.slice(1)+': '+v).join('\n')}</textarea>
+              <button type='submit'>Save Changes</button>
+            </form>
+            <button id='back-to-admin' style='margin-top:24px;padding:10px 24px;font-size:1em;background:#1976d2;color:#fff;border:none;border-radius:6px;cursor:pointer;'>Back to Admin Dashboard</button>
+          </div>
+        `;
+      },
+      'add-event': function() {
+        if (currentUser.role !== 'admin') {
+          return `<div class='section-box'><div class='readonly-badge'>Responder View</div><div style='margin-top:10px;'>You do not have access to admin features.</div></div>`;
+        }
+        return `
+          <div class='section-box'>
+            <div class='section-title'>Add New Event</div>
+            <form class='event-add-form' autocomplete='off' enctype='multipart/form-data'>
+              <label>Event Name</label>
+              <input type='text' name='name' required>
+              <label>Start Time</label>
+              <input type='datetime-local' name='start' required>
+              <label>End Time</label>
+              <input type='datetime-local' name='end' required>
+              <label>Map Image (JPG/PNG, optional)</label>
+              <input type='file' name='mapimg' accept='image/*'>
+              <label>IIMARCH Data</label>
+              <textarea name='iimarch' rows='7' placeholder='Incident: ...\nInformation: ...\nIntention: ...\nMethod: ...\nAdministration: ...\nRisk: ...\nCommunications: ...\nHumanitarian: ...'></textarea>
+              <button type='submit'>Add Event</button>
+            </form>
+            <button id='back-to-admin' style='margin-top:24px;padding:10px 24px;font-size:1em;background:#1976d2;color:#fff;border:none;border-radius:6px;cursor:pointer;'>Back to Admin Dashboard</button>
+          </div>
+        `;
+      },
+      'dispatch-past-event': function(eventId) {
+        const ev = liveEventsData.find(e => e.id === eventId);
+        if (!ev) return `<div class='section-box'><div>Event not found.</div></div>`;
+        const state = getDispatchState(eventId);
+        return `
+          <div class='section-box'>
+            <div class='section-title'>Past Dispatch Event: ${ev.name}</div>
+            <div style='font-size:1.1em;color:#444;margin-bottom:10px;'>${formatDateTime(ev.start)} - ${formatDateTime(ev.end)}</div>
+            <div style='margin-bottom:18px;'>
+              <b>Resources:</b><br>
+              ${state.resources.map(r => `${r.name} (${r.status})`).join(', ')}
+            </div>
+            <div style='margin-bottom:18px;'>
+              <b>Calls:</b><br>
+              ${state.calls.length === 0 ? '<span style="color:#888;">No calls for this event.</span>' : state.calls.map(call => `<div style='margin-bottom:4px;'>${call.ref}: ${call.details} [${call.status}]${call.assigned ? ' - Assigned: ' + state.resources.find(r=>r.id===call.assigned)?.name : ''}</div>`).join('')}
+            </div>
+            <button class='export-btn' id='export-dispatch-csv'>Export to Excel (CSV)</button>
+            <button id='back-to-dispatch' style='margin-left:18px;padding:10px 24px;font-size:1em;background:#888;color:#fff;border:none;border-radius:6px;cursor:pointer;'>Back</button>
+          </div>
+        `;
+      }
+    };
+    function showPage(page, arg) {
+      if (pages[page]) {
+        mainContent.innerHTML = pages[page](arg);
+        // Attach event listeners for live event links if on dashboard
+        if (page === 'dashboard') {
+          document.querySelectorAll('.live-event-link').forEach(link => {
+            link.onclick = function() {
+              showPage('live-events', this.getAttribute('data-event-id'));
+            };
+          });
+          document.querySelectorAll('.past-event-link').forEach(link => {
+            link.onclick = function() {
+              showPage('past-event', this.getAttribute('data-past-event-id'));
+            };
+          });
+        }
+        // Attach back button on live event or past event page
+        if ((page === 'live-events' && arg) || page === 'past-event') {
+          const backBtn = document.getElementById('back-to-dashboard');
+          if (backBtn) backBtn.onclick = () => showPage('dashboard');
+        }
+        // Use uploaded map image in event details
+        if ((page === 'live-events' && arg) || page === 'past-event') {
+          const ev = liveEventsData.find(e => e.id === arg);
+          if (ev) {
+            const mapImgHtml = renderEventMap(ev.id, mapBox(51.5 + Math.random()*0.1, -0.1 + Math.random()*0.1, 13));
+            const mapDiv = mainContent.querySelector('.event-map-img') || mainContent.querySelector('iframe');
+            if (mapDiv && mapDiv.parentNode) {
+              mapDiv.parentNode.innerHTML = mapImgHtml;
+            }
+          }
+        }
+        // Admin event tile click
+        if (page === 'admin') {
+          document.querySelectorAll('.admin-event-tile').forEach(tile => {
+            tile.onclick = function() {
+              showPage('admin-event', this.getAttribute('data-admin-event-id'));
+            };
+          });
+        }
+        // Back to admin dashboard
+        if (page === 'admin-event') {
+          const backBtn = document.getElementById('back-to-admin');
+          if (backBtn) backBtn.onclick = () => showPage('admin');
+        }
+        // Add event button
+        if (page === 'admin') {
+          const addBtn = document.getElementById('add-event-btn');
+          if (addBtn) addBtn.onclick = () => showPage('add-event');
+        }
+        // Add event form logic
+        if (page === 'add-event') {
+          const backBtn = document.getElementById('back-to-admin');
+          if (backBtn) backBtn.onclick = () => showPage('admin');
+        }
+        // Dispatch event select logic
+        if (page === 'dispatch') {
+          const enabledEvents = liveEventsData.filter(ev => ev.dispatchEnabled);
+          let selectedEventId = enabledEvents[0]?.id;
+          const dispatchUiDiv = document.getElementById('dispatch-ui');
+          function updateDispatchUI() {
+            dispatchUiDiv.innerHTML = renderDispatchUI(selectedEventId);
+            // Add call form logic
+            const callForm = document.getElementById('dispatch-call-form');
+            if (callForm) {
+              callForm.onsubmit = function(e) {
+                e.preventDefault();
+                const details = document.getElementById('dispatch-call-details').value.trim();
+                if (!details) return;
+                const state = getDispatchState(selectedEventId);
+                const ref = 'C' + (state.calls.length + 1).toString().padStart(3, '0');
+                state.calls.push({ ref, details, status: 'Open' });
+                updateDispatchUI();
+              };
+            }
+            // Resource status change
+            document.querySelectorAll('.resource-action').forEach((sel, idx) => {
+              sel.onchange = function() {
+                const state = getDispatchState(selectedEventId);
+                const resourceIdx = Number(sel.closest('.resource-row').getAttribute('data-resource-idx'));
+                state.resources[resourceIdx].status = sel.value;
+                updateDispatchUI();
+              };
+            });
+            // Assign resource to call
+            document.querySelectorAll('.call-assign-resource').forEach(sel => {
+              sel.onchange = function() {
+                const state = getDispatchState(selectedEventId);
+                const callIdx = Number(sel.getAttribute('data-call-idx'));
+                state.calls[callIdx].assigned = sel.value;
+                updateDispatchUI();
+              };
+            });
+            // Close call
+            document.querySelectorAll('.call-close-btn').forEach(btn => {
+              btn.onclick = function() {
+                const state = getDispatchState(selectedEventId);
+                const callIdx = Number(btn.getAttribute('data-call-idx'));
+                state.calls[callIdx].status = 'Closed';
+                updateDispatchUI();
+              };
+            });
+          }
+          updateDispatchUI();
+          const select = document.getElementById('dispatch-event-select');
+          if (select) {
+            select.onchange = function() {
+              selectedEventId = this.value;
+              updateDispatchUI();
+            };
+          }
+        }
+        // Dispatch event tile click
+        if (page === 'dispatch') {
+          document.querySelectorAll('.dispatch-event-tile').forEach(tile => {
+            const eventId = tile.getAttribute('data-dispatch-event-id');
+            if (eventId) tile.onclick = function(e) {
+              e.preventDefault();
+              history.pushState({dispatchEvent: eventId}, '', `/dispatch/${eventId}`);
+              showPage('dispatch', eventId);
+            };
+            const pastEventId = tile.getAttribute('data-dispatch-past-event-id');
+            if (pastEventId) tile.onclick = function(e) {
+              e.preventDefault();
+              history.pushState({dispatchPastEvent: pastEventId}, '', `/dispatch/${pastEventId}/past`);
+              showPage('dispatch-past-event', pastEventId);
+            };
+          });
+        }
+        // Export to CSV for past event
+        if (page === 'dispatch-past-event') {
+          const exportBtn = document.getElementById('export-dispatch-csv');
+          if (exportBtn) exportBtn.onclick = function() {
+            const ev = liveEventsData.find(ev => ev.id === arg);
+            const state = getDispatchState(arg);
+            let csv = 'Resource Name,Resource Status\n';
+            state.resources.forEach(r => { csv += `${r.name},${r.status}\n`; });
+            csv += '\nCall Ref,Details,Status,Assigned Resource\n';
+            state.calls.forEach(call => {
+              const assigned = call.assigned ? (state.resources.find(r=>r.id===call.assigned)?.name || '') : '';
+              csv += `${call.ref},${call.details},${call.status},${assigned}\n`;
+            });
+            const blob = new Blob([csv], {type: 'text/csv'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${ev.name.replace(/\s+/g,'_')}_dispatch.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+          };
+          const backBtn = document.getElementById('back-to-dispatch');
+          if (backBtn) backBtn.onclick = () => {
+            history.pushState({}, '', '/dispatch');
+            showPage('dispatch');
+          };
+        }
+      }
+    }
+    // Set up menu item click events
+    document.querySelectorAll('.menu-item').forEach(item => {
+      item.onclick = function() {
+        showPage(this.getAttribute('data-page'));
+        // Hide menu after click
+        sideMenu.style.left = '-240px';
+        mainContent.style.marginLeft = '0';
+        menuOpen = false;
+      };
+    });
+    // Show dashboard by default
+    showPage('dashboard');
+
+    // Excel upload logic (placeholder for demo)
+    document.addEventListener('change', function(e) {
+      if (e.target && e.target.id === 'excel-file') {
+        const file = e.target.files[0];
+        if (file) {
+          document.getElementById('excel-output').innerHTML = `<div>File <b>${file.name}</b> selected. (Excel parsing and conversion will be implemented here.)</div>`;
+        }
+      }
+    });
+    document.addEventListener('submit', function(e) {
+      if (e.target && e.target.id === 'excel-upload-form') {
+        e.preventDefault();
+        document.getElementById('excel-output').innerHTML = `<div style='color:#1976d2;'>Excel file uploaded! (Conversion to logs/patients will be implemented.)</div>`;
+      }
+    });
+
+    // Admin form logic
+    document.addEventListener('submit', function(e) {
+      if (e.target && e.target.classList.contains('event-edit-form')) {
+        e.preventDefault();
+        if (currentUser.role !== 'admin') return;
+        const form = e.target;
+        const eventId = form.getAttribute('data-event-id');
+        const fd = new FormData(form);
+        // Update event name, start, end
+        const ev = liveEventsData.find(ev => ev.id === eventId);
+        if (ev) {
+          ev.name = fd.get('name');
+          ev.start = new Date(fd.get('start'));
+          ev.end = new Date(fd.get('end'));
+          // Update dispatchEnabled
+          ev.dispatchEnabled = !!fd.get('dispatchEnabled');
+          // Update IIMARCH
+          const iimarchLines = fd.get('iimarch').split('\n');
+          iimarchLines.forEach(line => {
+            const idx = line.indexOf(':');
+            if (idx > 0) {
+              const key = line.slice(0, idx).trim().toLowerCase();
+              const val = line.slice(idx+1).trim();
+              if (ev.iimarch[key] !== undefined) ev.iimarch[key] = val;
+            }
+          });
+        }
+        // Handle map image upload
+        const file = fd.get('mapimg');
+        if (file && file.size > 0) {
+          const reader = new FileReader();
+          reader.onload = function(evt) {
+            eventMapImages[eventId] = evt.target.result;
+            showPage('admin');
+          };
+          reader.readAsDataURL(file);
+        } else {
+          showPage('admin');
+        }
+      }
+    });
+    document.addEventListener('submit', function(e) {
+      if (e.target && e.target.classList.contains('event-add-form')) {
+        e.preventDefault();
+        if (currentUser.role !== 'admin') return;
+        const form = e.target;
+        const fd = new FormData(form);
+        const id = 'event' + (Math.random().toString(36).slice(2, 10));
+        const name = fd.get('name');
+        const start = new Date(fd.get('start'));
+        const end = new Date(fd.get('end'));
+        // Parse IIMARCH
+        const iimarch = {};
+        (fd.get('iimarch')||'').split('\n').forEach(line => {
+          const idx = line.indexOf(':');
+          if (idx > 0) {
+            const key = line.slice(0, idx).trim().toLowerCase();
+            const val = line.slice(idx+1).trim();
+            iimarch[key] = val;
+          }
+        });
+        liveEventsData.push({ id, name, start, end, iimarch });
+        // Handle map image upload
+        const file = fd.get('mapimg');
+        if (file && file.size > 0) {
+          const reader = new FileReader();
+          reader.onload = function(evt) {
+            eventMapImages[id] = evt.target.result;
+            showPage('admin');
+          };
+          reader.readAsDataURL(file);
+        } else {
+          showPage('admin');
+        }
+      }
+    });
+
+    function renderDispatchUI(eventId) {
+      const ev = liveEventsData.find(e => e.id === eventId);
+      if (!ev) return '<div>Event not found.</div>';
+      const state = getDispatchState(eventId);
+      // Resource status options
+      const statusOptions = ['Available','EnRoute','OnScene','Busy','Clear'];
+      // Map image or fallback
+      const mapImg = eventMapImages[ev.id] ? `<img src='${eventMapImages[ev.id]}' class='dispatch-map-img' alt='Event Map'>` : mapBox();
+      return `
+        <div style='margin-bottom:18px;font-size:1.1em;font-weight:600;'>${ev.name} (${formatDateTime(ev.start)} - ${formatDateTime(ev.end)})</div>
+        <div class='dispatch-main-grid'>
+          <div class='dispatch-resources-board'>
+            <div class='dispatch-board-title'>Resources</div>
+            <div class='dispatch-resources-table'>
+              ${state.resources.map((r, idx) => `
+                <div class='resource-row' data-resource-idx='${idx}'>
+                  <span class='resource-name'>${r.name}</span>
+                  <span class='resource-status resource-status-${r.status.replace(/\s/g,"") }'>${r.status}</span>
+                  <select class='resource-action'>
+                    ${statusOptions.map(opt => `<option value='${opt}' ${r.status===opt?'selected':''}>${opt}</option>`).join('')}
+                  </select>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+          <div class='dispatch-calls-board'>
+            <div class='dispatch-board-title'>Active Calls</div>
+            <div class='dispatch-calls-list'>
+              ${state.calls.length === 0 ? '<div style="color:#888;">No calls yet.</div>' : state.calls.map((call, idx) => `
+                <div class='call-card'>
+                  <div><b>Ref:</b> ${call.ref}</div>
+                  <div><b>Details:</b> ${call.details}</div>
+                  <div><b>Status:</b> ${call.status}</div>
+                  <div><b>Assigned:</b> <select class='call-assign-resource' data-call-idx='${idx}'>
+                    <option value=''>-- Select --</option>
+                    ${state.resources.map(r => `<option value='${r.id}' ${call.assigned===r.id?'selected':''}>${r.name}</option>`).join('')}
+                  </select></div>
+                  <button class='dispatch-btn call-close-btn' data-call-idx='${idx}'>Close Call</button>
+                </div>
+              `).join('')}
+            </div>
+            <form id='dispatch-call-form' class='dispatch-call-form' style='margin-top:12px;display:flex;gap:8px;'>
+              <input type='text' id='dispatch-call-details' placeholder='New call details...' style='flex:1;padding:7px 10px;border-radius:6px;border:1px solid #c3cfe2;'>
+              <button class='dispatch-btn' type='submit'>Add Call</button>
+            </form>
+          </div>
+          <div class='dispatch-map-board'>
+            <div class='dispatch-board-title'>Event Map</div>
+            ${mapImg}
+          </div>
+        </div>
+      `;
+    }
+
+    // --- Offline/Online Indicator ---
+    function updateOfflineIndicator() {
+      const ind = document.getElementById('offline-indicator');
+      if (!navigator.onLine) {
+        ind.textContent = 'Offline: Changes will sync when back online.';
+        ind.className = 'offline-indicator offline';
+      } else {
+        ind.textContent = 'Online';
+        ind.className = 'offline-indicator online';
+        setTimeout(() => { ind.className = 'offline-indicator'; }, 2000);
+      }
+    }
+    window.addEventListener('online', updateOfflineIndicator);
+    window.addEventListener('offline', updateOfflineIndicator);
+    updateOfflineIndicator();
+
+    // --- Local Storage for Dispatch State ---
+    function saveDispatchState() {
+      localStorage.setItem('dispatchState', JSON.stringify(dispatchState));
+    }
+    function loadDispatchState() {
+      const data = localStorage.getItem('dispatchState');
+      if (data) {
+        try {
+          const parsed = JSON.parse(data);
+          if (typeof parsed === 'object' && parsed !== null) {
+            dispatchState = parsed;
+          }
+        } catch {}
+      }
+    }
+    // Load on startup
+    loadDispatchState();
+
+    // Patch getDispatchState to always save after change
+    function getDispatchState(eventId) {
+      if (!dispatchState[eventId]) {
+        dispatchState[eventId] = {
+          resources: [
+            { id: 'amb1', name: 'Ambulance 1', status: 'Available' },
+            { id: 'amb2', name: 'Ambulance 2', status: 'Available' },
+            { id: 'fr1', name: 'First Responder 1', status: 'Available' }
+          ],
+          calls: []
+        };
+        saveDispatchState();
+      }
+      return dispatchState[eventId];
+    }
+    // Save after any change in dispatch system
+    function patchDispatchState(eventId, fn) {
+      fn(getDispatchState(eventId));
+      saveDispatchState();
+    }
+
+    // --- SPA Routing for Dispatch ---
+    function routeDispatch() {
+      const path = window.location.pathname;
+      let match = path.match(/^\/dispatch\/([^\/]+)\/past$/);
+      if (match) {
+        showPage('dispatch-past-event', match[1]);
+        return;
+      }
+      match = path.match(/^\/dispatch\/([^\/]+)$/);
+      if (match) {
+        showPage('dispatch', match[1]);
+        return;
+      }
+      if (path === '/dispatch') {
+        showPage('dispatch');
+        return;
+      }
+    }
+    window.onpopstate = routeDispatch;
+    document.addEventListener('DOMContentLoaded', routeDispatch);
+
+    // --- Patch showPage for SPA and localStorage ---
+    const origShowPage = showPage;
+    showPage = function(page, arg) {
+      origShowPage(page, arg);
+      // Attach SPA logic for dispatch tiles
+      if (page === 'dispatch') {
+        document.querySelectorAll('.dispatch-event-tile').forEach(tile => {
+          const eventId = tile.getAttribute('data-dispatch-event-id');
+          if (eventId) tile.onclick = function(e) {
+            e.preventDefault();
+            history.pushState({dispatchEvent: eventId}, '', `/dispatch/${eventId}`);
+            showPage('dispatch', eventId);
+          };
+          const pastEventId = tile.getAttribute('data-dispatch-past-event-id');
+          if (pastEventId) tile.onclick = function(e) {
+            e.preventDefault();
+            history.pushState({dispatchPastEvent: pastEventId}, '', `/dispatch/${pastEventId}/past`);
+            showPage('dispatch-past-event', pastEventId);
+          };
+        });
+      }
+      // Patch dispatch system to save to localStorage after any change
+      if (page === 'dispatch' && arg) {
+        // Patch resource status change
+        document.querySelectorAll('.resource-action').forEach((sel, idx) => {
+          sel.onchange = function() {
+            patchDispatchState(arg, state => {
+              const resourceIdx = Number(sel.closest('.resource-row').getAttribute('data-resource-idx'));
+              state.resources[resourceIdx].status = sel.value;
+            });
+            showPage('dispatch', arg);
+          };
+        });
+        // Patch call assignment
+        document.querySelectorAll('.call-assign-resource').forEach(sel => {
+          sel.onchange = function() {
+            patchDispatchState(arg, state => {
+              const callIdx = Number(sel.getAttribute('data-call-idx'));
+              state.calls[callIdx].assigned = sel.value;
+            });
+            showPage('dispatch', arg);
+          };
+        });
+        // Patch close call
+        document.querySelectorAll('.call-close-btn').forEach(btn => {
+          btn.onclick = function() {
+            patchDispatchState(arg, state => {
+              const callIdx = Number(btn.getAttribute('data-call-idx'));
+              state.calls[callIdx].status = 'Closed';
+            });
+            showPage('dispatch', arg);
+          };
+        });
+        // Patch add call
+        const callForm = document.getElementById('dispatch-call-form');
+        if (callForm) {
+          callForm.onsubmit = function(e) {
+            e.preventDefault();
+            const details = document.getElementById('dispatch-call-details').value.trim();
+            if (!details) return;
+            patchDispatchState(arg, state => {
+              const ref = 'C' + (state.calls.length + 1).toString().padStart(3, '0');
+              state.calls.push({ ref, details, status: 'Open' });
+            });
+            showPage('dispatch', arg);
+          };
+        }
+      }
+    };
+    // On initial load, route
+    routeDispatch();
+  </script>
+</body>
+</html>
